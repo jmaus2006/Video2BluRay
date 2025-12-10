@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="VideoConverter/bin/Debug/net10.0-windows/ffmpeg.exe" />
+  </Folder>
+  <Project Path="VideoConverter/VideoConverter.csproj" />
+</Solution>
