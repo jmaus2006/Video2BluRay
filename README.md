@@ -6,3 +6,6 @@ Frame rate<br>
 Codec<br>
 Bitrate<br>
 Interpolation<br>
+<br><hr><br>
+Updated element names<br>
+Clears progress bar upon completion and resets input video label.
