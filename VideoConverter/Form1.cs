@@ -7,6 +7,26 @@ namespace VideoConverter
             InitializeComponent();
         }
 
+        private class VideoInfo
+        {
+            public string Codec { get; set; }
+            public double? Fps { get; set; }
+            public string Bitrate { get; set; }
+        }
+        private VideoInfo selectedVideoInfo = null;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            comboBoxFrameRate.SelectedItem = "29.97";
+            comboBoxBitrate.SelectedItem = "25M";
+            comboBoxCodec.SelectedItem = "libx264";
+            comboBoxInterpolation.SelectedItem = "minterpolate";
+            // Set video info labels to initial state
+            lblFpsValue.Text = string.Empty;
+            lblBitrateValue.Text = string.Empty;
+            lblCodecValue.Text = "No video selected";
+        }
+
         private void btnSelectVid_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
@@ -15,16 +35,61 @@ namespace VideoConverter
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     lblSelectedFile.Text = openFileDialog.FileName;
+                    selectedVideoInfo = GetVideoInfo(openFileDialog.FileName);
+                    // Update UI labels for video info
+                    if (selectedVideoInfo != null)
+                    {
+                        lblFpsValue.Text = $"Frames per second: {(selectedVideoInfo.Fps?.ToString() ?? "N/A" )}";
+                        lblBitrateValue.Text = $"Bitrate: {selectedVideoInfo.Bitrate ?? "N/A"}";
+                        lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
+                    }
+                    else
+                    {
+                        lblFpsValue.Text = "Frames per second: N/A";
+                        lblBitrateValue.Text = "Bitrate: N/A";
+                        lblCodecValue.Text = "Codec: N/A";
+                    }
+                }
+                else
+                {
+                    // No video selected
+                    lblFpsValue.Text = string.Empty;
+                    lblBitrateValue.Text = string.Empty;
+                    lblCodecValue.Text = "No video selected";
                 }
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private VideoInfo GetVideoInfo(string filePath)
         {
-            comboBoxFrameRate.SelectedItem = "29.97";
-            comboBoxBitrate.SelectedItem = "25M";
-            comboBoxCodec.SelectedItem = "libx264";
-            comboBoxInterpolation.SelectedItem = "minterpolate";
+            try
+            {
+                var process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = "ffmpeg.exe";
+                process.StartInfo.Arguments = $"-i \"{filePath}\"";
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                string output = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+                var info = new VideoInfo();
+                // Codec
+                var codecMatch = System.Text.RegularExpressions.Regex.Match(output, @"Video: ([^,]+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (codecMatch.Success)
+                    info.Codec = codecMatch.Groups[1].Value.Trim();
+                // FPS
+                var fpsMatch = System.Text.RegularExpressions.Regex.Match(output, @"(\d+(?:\.\d+)?) fps", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (fpsMatch.Success && double.TryParse(fpsMatch.Groups[1].Value, out double fps))
+                    info.Fps = fps;
+                // Bitrate
+                var bitrateMatch = System.Text.RegularExpressions.Regex.Match(output, @"bitrate: (\d+ kb/s)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (bitrateMatch.Success)
+                    info.Bitrate = bitrateMatch.Groups[1].Value.Trim();
+                return info;
+            }
+            catch { return null; }
         }
 
         private void btnOutputDir_Click(object sender, EventArgs e)

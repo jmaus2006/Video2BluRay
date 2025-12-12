@@ -48,6 +48,13 @@
             txtArgs = new TextBox();
             btnRun = new Button();
             label1 = new Label();
+            lblFpsValue = new Label();
+            lblBitrateValue = new Label();
+            lblCodecValue = new Label();
+            groupBox1 = new GroupBox();
+            groupBox2 = new GroupBox();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelectVid
@@ -75,9 +82,9 @@
             comboBoxFrameRate.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxFrameRate.FormattingEnabled = true;
             comboBoxFrameRate.Items.AddRange(new object[] { "23.976", "24", "25", "29.97", "50", "59.94" });
-            comboBoxFrameRate.Location = new Point(195, 115);
+            comboBoxFrameRate.Location = new Point(195, 52);
             comboBoxFrameRate.Name = "comboBoxFrameRate";
-            comboBoxFrameRate.Size = new Size(223, 33);
+            comboBoxFrameRate.Size = new Size(223, 36);
             comboBoxFrameRate.TabIndex = 2;
             // 
             // comboBoxBitrate
@@ -85,18 +92,18 @@
             comboBoxBitrate.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxBitrate.FormattingEnabled = true;
             comboBoxBitrate.Items.AddRange(new object[] { "12M", "13M", "14M", "15M", "18M", "20M", "21M", "22M", "23M", "24M", "25M", "26M", "27M", "28M", "29M", "30M", "35M" });
-            comboBoxBitrate.Location = new Point(195, 165);
+            comboBoxBitrate.Location = new Point(195, 102);
             comboBoxBitrate.Name = "comboBoxBitrate";
-            comboBoxBitrate.Size = new Size(223, 33);
+            comboBoxBitrate.Size = new Size(223, 36);
             comboBoxBitrate.TabIndex = 3;
             // 
             // comboBoxCodec
             // 
             comboBoxCodec.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCodec.Items.AddRange(new object[] { "libx264", "mpeg2video", "vc1" });
-            comboBoxCodec.Location = new Point(195, 215);
+            comboBoxCodec.Location = new Point(195, 152);
             comboBoxCodec.Name = "comboBoxCodec";
-            comboBoxCodec.Size = new Size(223, 33);
+            comboBoxCodec.Size = new Size(223, 36);
             comboBoxCodec.TabIndex = 4;
             // 
             // comboBoxInterpolation
@@ -104,51 +111,51 @@
             comboBoxInterpolation.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxInterpolation.FormattingEnabled = true;
             comboBoxInterpolation.Items.AddRange(new object[] { "minterpolate", "tblend", "None" });
-            comboBoxInterpolation.Location = new Point(195, 265);
+            comboBoxInterpolation.Location = new Point(195, 202);
             comboBoxInterpolation.Name = "comboBoxInterpolation";
-            comboBoxInterpolation.Size = new Size(223, 33);
+            comboBoxInterpolation.Size = new Size(223, 36);
             comboBoxInterpolation.TabIndex = 5;
             // 
             // lblFps
             // 
             lblFps.AutoSize = true;
-            lblFps.Location = new Point(27, 115);
+            lblFps.Location = new Point(14, 55);
             lblFps.Name = "lblFps";
-            lblFps.Size = new Size(162, 25);
+            lblFps.Size = new Size(175, 28);
             lblFps.TabIndex = 6;
             lblFps.Text = "Frames per second";
             // 
             // lblBitrate
             // 
             lblBitrate.AutoSize = true;
-            lblBitrate.Location = new Point(27, 165);
+            lblBitrate.Location = new Point(120, 105);
             lblBitrate.Name = "lblBitrate";
-            lblBitrate.Size = new Size(62, 25);
+            lblBitrate.Size = new Size(69, 28);
             lblBitrate.TabIndex = 7;
             lblBitrate.Text = "Bitrate";
             // 
             // lblCodec
             // 
             lblCodec.AutoSize = true;
-            lblCodec.Location = new Point(27, 215);
+            lblCodec.Location = new Point(122, 152);
             lblCodec.Name = "lblCodec";
-            lblCodec.Size = new Size(62, 25);
+            lblCodec.Size = new Size(67, 28);
             lblCodec.TabIndex = 8;
             lblCodec.Text = "Codec";
             // 
             // lblInterpolate
             // 
             lblInterpolate.AutoSize = true;
-            lblInterpolate.Location = new Point(27, 265);
+            lblInterpolate.Location = new Point(63, 202);
             lblInterpolate.Name = "lblInterpolate";
-            lblInterpolate.Size = new Size(114, 25);
+            lblInterpolate.Size = new Size(126, 28);
             lblInterpolate.TabIndex = 9;
             lblInterpolate.Text = "Interpolation";
             // 
             // btnConvert
             // 
             btnConvert.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(422, 397);
+            btnConvert.Location = new Point(431, 487);
             btnConvert.Name = "btnConvert";
             btnConvert.Size = new Size(355, 80);
             btnConvert.TabIndex = 8;
@@ -160,7 +167,7 @@
             // 
             lblOutputDir.AutoSize = true;
             lblOutputDir.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOutputDir.Location = new Point(27, 480);
+            lblOutputDir.Location = new Point(33, 573);
             lblOutputDir.Name = "lblOutputDir";
             lblOutputDir.Size = new Size(0, 32);
             lblOutputDir.TabIndex = 13;
@@ -168,7 +175,7 @@
             // btnOutputDir
             // 
             btnOutputDir.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOutputDir.Location = new Point(27, 397);
+            btnOutputDir.Location = new Point(36, 487);
             btnOutputDir.Name = "btnOutputDir";
             btnOutputDir.Size = new Size(373, 80);
             btnOutputDir.TabIndex = 7;
@@ -178,31 +185,33 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(24, 531);
+            progressBar1.Location = new Point(33, 621);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(557, 23);
+            progressBar1.Size = new Size(630, 33);
             progressBar1.TabIndex = 14;
             // 
             // labelProgress
             // 
-            labelProgress.Location = new Point(588, 531);
+            labelProgress.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelProgress.Location = new Point(669, 621);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new Size(50, 23);
             labelProgress.TabIndex = 15;
             labelProgress.Text = "0%";
+            labelProgress.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(27, 333);
+            txtFileName.Location = new Point(574, 423);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(391, 31);
+            txtFileName.Size = new Size(324, 31);
             txtFileName.TabIndex = 6;
             // 
             // btnConcat
             // 
             btnConcat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConcat.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConcat.Location = new Point(440, 24);
+            btnConcat.Location = new Point(569, 24);
             btnConcat.Name = "btnConcat";
             btnConcat.Size = new Size(337, 53);
             btnConcat.TabIndex = 1;
@@ -213,18 +222,19 @@
             // txtArgs
             // 
             txtArgs.BackColor = SystemColors.ControlLightLight;
-            txtArgs.Location = new Point(24, 570);
+            txtArgs.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtArgs.Location = new Point(33, 674);
             txtArgs.Multiline = true;
             txtArgs.Name = "txtArgs";
             txtArgs.ReadOnly = true;
-            txtArgs.Size = new Size(558, 100);
+            txtArgs.Size = new Size(630, 100);
             txtArgs.TabIndex = 9;
             // 
             // btnRun
             // 
             btnRun.Enabled = false;
             btnRun.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(588, 570);
+            btnRun.Location = new Point(708, 674);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(189, 100);
             btnRun.TabIndex = 10;
@@ -235,31 +245,77 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(422, 339);
+            label1.Location = new Point(438, 423);
             label1.Name = "label1";
-            label1.Size = new Size(167, 25);
+            label1.Size = new Size(130, 25);
             label1.TabIndex = 21;
-            label1.Text = "File Name to Create";
+            label1.Text = "New File Name";
+            // 
+            // lblFpsValue
+            // 
+            lblFpsValue.Location = new Point(78, 52);
+            lblFpsValue.Name = "lblFpsValue";
+            lblFpsValue.Size = new Size(250, 30);
+            lblFpsValue.TabIndex = 21;
+            // 
+            // lblBitrateValue
+            // 
+            lblBitrateValue.Location = new Point(78, 102);
+            lblBitrateValue.Name = "lblBitrateValue";
+            lblBitrateValue.Size = new Size(250, 30);
+            lblBitrateValue.TabIndex = 22;
+            // 
+            // lblCodecValue
+            // 
+            lblCodecValue.Location = new Point(78, 152);
+            lblCodecValue.Name = "lblCodecValue";
+            lblCodecValue.Size = new Size(250, 30);
+            lblCodecValue.TabIndex = 23;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(lblCodecValue);
+            groupBox1.Controls.Add(lblBitrateValue);
+            groupBox1.Controls.Add(lblFpsValue);
+            groupBox1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.Location = new Point(36, 124);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(383, 274);
+            groupBox1.TabIndex = 25;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Video Info";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(comboBoxFrameRate);
+            groupBox2.Controls.Add(comboBoxBitrate);
+            groupBox2.Controls.Add(comboBoxCodec);
+            groupBox2.Controls.Add(comboBoxInterpolation);
+            groupBox2.Controls.Add(lblFps);
+            groupBox2.Controls.Add(lblBitrate);
+            groupBox2.Controls.Add(lblCodec);
+            groupBox2.Controls.Add(lblInterpolate);
+            groupBox2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox2.Location = new Point(444, 124);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(453, 274);
+            groupBox2.TabIndex = 26;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "New Parameters";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(813, 714);
+            ClientSize = new Size(937, 800);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(btnConcat);
             Controls.Add(txtFileName);
             Controls.Add(lblOutputDir);
             Controls.Add(btnOutputDir);
             Controls.Add(btnConvert);
-            Controls.Add(lblInterpolate);
-            Controls.Add(lblCodec);
-            Controls.Add(lblBitrate);
-            Controls.Add(lblFps);
-            Controls.Add(comboBoxInterpolation);
-            Controls.Add(comboBoxCodec);
-            Controls.Add(comboBoxBitrate);
-            Controls.Add(comboBoxFrameRate);
             Controls.Add(lblSelectedFile);
             Controls.Add(btnSelectVid);
             Controls.Add(progressBar1);
@@ -269,6 +325,9 @@
             Name = "Form1";
             Text = "Video Converter 1.0";
             Load += Form1_Load;
+            groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -295,5 +354,10 @@
         private TextBox txtArgs;
         private Button btnRun;
         private Label label1;
+        private Label lblFpsValue;
+        private Label lblBitrateValue;
+        private Label lblCodecValue;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
     }
 }
