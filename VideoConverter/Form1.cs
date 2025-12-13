@@ -114,9 +114,16 @@ namespace VideoConverter
             string inputFile = lblSelectedFile.Text;
             string outputDir = lblOutputDir.Text;
             string newFileName = txtFileName.Text.Trim() ?? "outputVideo.mp4";
-            if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
+            bool isMKV = checkboxMKV != null && checkboxMKV.Checked;
+            if (isMKV)
             {
-                newFileName += ".mp4";
+                if (!newFileName.EndsWith(".mkv", StringComparison.OrdinalIgnoreCase))
+                    newFileName = Path.ChangeExtension(newFileName, ".mkv");
+            }
+            else
+            {
+                if (!newFileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
+                    newFileName += ".mp4";
             }
             if (string.IsNullOrWhiteSpace(inputFile) && string.IsNullOrWhiteSpace(outputDir))
             {
@@ -170,7 +177,16 @@ namespace VideoConverter
             {
                 inputArg = $"-i \"{inputFile}\" ";
             }
-            string args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 \"{outputFile}\"";
+            string args;
+            if (isMKV)
+            {
+                // Blu-ray compliant mkv
+                args = $"{inputArg}{vfArg}-c:v libx264 -profile:v high -level 4.1 -pix_fmt yuv420p -r 30000/1001 -b:v {bitrate} -c:a ac3 -b:a 640k -ar 48000 \"{outputFile}\"";
+            }
+            else
+            {
+                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 \"{outputFile}\"";
+            }
             txtArgs.Text = "ffmpeg " + args;
             btnRun.Enabled = true;
             pendingArgs = args;

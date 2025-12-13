@@ -53,6 +53,7 @@
             lblCodecValue = new Label();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            checkboxMKV = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -303,11 +304,23 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "New Parameters";
             // 
+            // checkboxMKV
+            // 
+            checkboxMKV.AutoSize = true;
+            checkboxMKV.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkboxMKV.Location = new Point(721, 622);
+            checkboxMKV.Name = "checkboxMKV";
+            checkboxMKV.Size = new Size(176, 32);
+            checkboxMKV.TabIndex = 27;
+            checkboxMKV.Text = "Create MKV File";
+            checkboxMKV.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(937, 800);
+            Controls.Add(checkboxMKV);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(label1);
@@ -359,5 +372,6 @@
         private Label lblCodecValue;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
+        private CheckBox checkboxMKV;
     }
 }
