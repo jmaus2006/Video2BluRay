@@ -382,7 +382,7 @@ namespace VideoConverter
             }
         }
         
-        private void btnGenerateBluray_Click(object sender, EventArgs e)
+        private async void btnGenerateBluray_Click(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
             {
@@ -396,21 +396,125 @@ namespace VideoConverter
                         MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    string metaFile = Path.Combine(outputDir, "bluray.meta");
-                    using (var writer = new StreamWriter(metaFile, false))
+                    int created = 0;
+                    int fileCount = openFileDialog.FileNames.Length;
+                    string[] bdmvDirs = new string[fileCount];
+                    string[] metaFiles = new string[fileCount];
+                    for (int i = 0; i < fileCount; i++)
                     {
-                        for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+                        string filePath = openFileDialog.FileNames[i];
+                        string metaFile = Path.Combine(outputDir, fileCount == 1 ? "bluray.meta" : $"bluray{i + 1}.meta");
+                        metaFiles[i] = metaFile;
+                        using (var writer = new StreamWriter(metaFile, false))
                         {
-                            string file = Path.GetFileName(openFileDialog.FileNames[i]);
                             writer.WriteLine("MUXOPT --blu-ray --auto-chapters=5 --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500");
-                            writer.WriteLine($"V_MPEG4/ISO/AVC, \"{file}\", track=1");
-                            writer.WriteLine($"A_AC3, \"{file}\", track=2");
-                            if (i < openFileDialog.FileNames.Length - 1)
-                                writer.WriteLine("--start-segment");
+                            writer.WriteLine($"V_MPEG4/ISO/AVC, \"{filePath}\", track=1");
+                            writer.WriteLine($"A_AC3, \"{filePath}\", track=2");
+                        }
+                        // Run tsmuxer for this meta file
+                        string bdmvDir = Path.Combine(outputDir, $"BDMV{i + 1}");
+                        bdmvDirs[i] = bdmvDir;
+                        try
+                        {
+                            if (!Directory.Exists(bdmvDir))
+                                Directory.CreateDirectory(bdmvDir);
+                            var process = new System.Diagnostics.Process();
+                            process.StartInfo.FileName = "tsmuxer.exe";
+                            process.StartInfo.Arguments = $"\"{metaFile}\" \"{bdmvDir}\"";
+                            process.StartInfo.UseShellExecute = false;
+                            process.StartInfo.RedirectStandardOutput = true;
+                            process.StartInfo.RedirectStandardError = true;
+                            process.StartInfo.CreateNoWindow = true;
+                            process.Start();
+                            await process.WaitForExitAsync();
+                            created++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to run tsmuxer for {metaFile}: {ex.Message}");
                         }
                     }
-                    MessageBox.Show($"bluray.meta file created in {outputDir}");             
-                                 
+                    // --- Merging Step ---
+                    string mergedBDMV = Path.Combine(outputDir, "BDMV");
+                    string mergedSTREAM = Path.Combine(mergedBDMV, "STREAM");
+                    string mergedPLAYLIST = Path.Combine(mergedBDMV, "PLAYLIST");
+                    string mergedCLIPINF = Path.Combine(mergedBDMV, "CLIPINF");
+                    Directory.CreateDirectory(mergedBDMV);
+                    Directory.CreateDirectory(mergedSTREAM);
+                    Directory.CreateDirectory(mergedPLAYLIST);
+                    Directory.CreateDirectory(mergedCLIPINF);
+                    // Copy index.bdmv and MovieObject.bdmv from BDMV1/BDMV
+                    string bdmv1BDMV = Path.Combine(bdmvDirs[0], "BDMV");
+                    string[] bdmvFiles = { "index.bdmv", "MovieObject.bdmv" };
+                    foreach (var file in bdmvFiles)
+                    {
+                        string src = Path.Combine(bdmv1BDMV, file);
+                        string dst = Path.Combine(mergedBDMV, file);
+                        if (File.Exists(src))
+                            File.Copy(src, dst, true);
+                    }
+                    int streamIdx = 0, playlistIdx = 0, clipinfIdx = 0;
+                    for (int i = 0; i < bdmvDirs.Length; i++)
+                    {
+                        string bdmvSub = Path.Combine(bdmvDirs[i], "BDMV");
+                        // STREAM
+                        string streamDir = Path.Combine(bdmvSub, "STREAM");
+                        if (Directory.Exists(streamDir))
+                        {
+                            foreach (var file in Directory.GetFiles(streamDir, "*.m2ts"))
+                            {
+                                string newName = streamIdx.ToString("D5") + ".m2ts";
+                                File.Copy(file, Path.Combine(mergedSTREAM, newName), true);
+                                streamIdx++;
+                            }
+                        }
+                        // PLAYLIST
+                        string playlistDir = Path.Combine(bdmvSub, "PLAYLIST");
+                        if (Directory.Exists(playlistDir))
+                        {
+                            foreach (var file in Directory.GetFiles(playlistDir, "*.mpls"))
+                            {
+                                string newName = playlistIdx.ToString("D5") + ".mpls";
+                                File.Copy(file, Path.Combine(mergedPLAYLIST, newName), true);
+                                playlistIdx++;
+                            }
+                        }
+                        // CLIPINF
+                        string clipinfDir = Path.Combine(bdmvSub, "CLIPINF");
+                        if (Directory.Exists(clipinfDir))
+                        {
+                            foreach (var file in Directory.GetFiles(clipinfDir, "*.clpi"))
+                            {
+                                string newName = clipinfIdx.ToString("D5") + ".clpi";
+                                File.Copy(file, Path.Combine(mergedCLIPINF, newName), true);
+                                clipinfIdx++;
+                            }
+                        }
+                    }
+                    // --- Remove BDMV1, BDMV2, ... directories ---
+                    foreach (var dir in bdmvDirs)
+                    {
+                        try
+                        {
+                            if (Directory.Exists(dir))
+                                Directory.Delete(dir, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to delete {dir}: {ex.Message}");
+                        }
+                    }
+                    // --- Remove .meta files in outputDir ---
+                    try
+                    {
+                        var metaFilesToDelete = Directory.GetFiles(outputDir, "bluray*.meta");
+                        foreach (var meta in metaFilesToDelete)
+                        {
+                            try { File.Delete(meta); } catch { }
+                        }
+                    }
+                    catch { }
+                    MessageBox.Show($"{openFileDialog.FileNames.Length} bluray.meta file(s) created, tsmuxer run, BDMV merged, old BDMV folders and .meta files removed in {outputDir}");
                 }
             }
         }
