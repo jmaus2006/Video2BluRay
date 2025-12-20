@@ -1,3 +1,5 @@
+using System.Configuration;
+
 namespace VideoConverter
 {
     public partial class Form1 : Form
@@ -29,6 +31,12 @@ namespace VideoConverter
             btnGenerateBluray.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
             btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBluray.Text = string.Empty;
+            // Load last output directory if available
+            string lastDir = Properties.Settings.Default.LastOutputDir;
+            if (!string.IsNullOrWhiteSpace(lastDir) && System.IO.Directory.Exists(lastDir))
+            {
+                lblOutputDir.Text = lastDir;
+            }
         }
 
         private void btnSelectVid_Click(object sender, EventArgs e)
@@ -103,6 +111,9 @@ namespace VideoConverter
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     lblOutputDir.Text = folderDialog.SelectedPath;
+                    // Save to settings
+                    Properties.Settings.Default.LastOutputDir = folderDialog.SelectedPath;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -249,6 +260,7 @@ namespace VideoConverter
                 progressBar1.Value = 100;
                 labelProgress.Text = "100%";
                 MessageBox.Show("Conversion completed successfully!");
+                await Task.Delay(1000);
                 progressBar1.Value = 0;
                 labelProgress.Text = "0%";
                 lblSelectedFile.Text = string.Empty;
@@ -396,8 +408,11 @@ namespace VideoConverter
                         MessageBox.Show("You must select an output folder first.", "Missing Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    int created = 0;
                     int fileCount = openFileDialog.FileNames.Length;
+                    progressBar1.Minimum = 0;
+                    progressBar1.Maximum = fileCount;
+                    progressBar1.Value = 0;
+                    labelProgress.Text = $"0/{fileCount}";
                     string[] bdmvDirs = new string[fileCount];
                     string[] metaFiles = new string[fileCount];
                     for (int i = 0; i < fileCount; i++)
@@ -427,12 +442,15 @@ namespace VideoConverter
                             process.StartInfo.CreateNoWindow = true;
                             process.Start();
                             await process.WaitForExitAsync();
-                            created++;
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show($"Failed to run tsmuxer for {metaFile}: {ex.Message}");
                         }
+                        // Update progress bar after each file
+                        progressBar1.Value = i + 1;
+                        labelProgress.Text = $"{i + 1}/{fileCount}";
+                        await Task.Delay(100); // Small delay for UI update
                     }
                     // --- Merging Step ---
                     string mergedBDMV = Path.Combine(outputDir, "BDMV");
@@ -514,8 +532,28 @@ namespace VideoConverter
                         }
                     }
                     catch { }
-                    MessageBox.Show($"{openFileDialog.FileNames.Length} bluray.meta file(s) created, tsmuxer run, BDMV merged, old BDMV folders and .meta files removed in {outputDir}");
+                    // Reset progress bar
+                    MessageBox.Show("Blu-ray folder created successfully!");
+                    await Task.Delay(1000);
+                    progressBar1.Value = 0;
+                    labelProgress.Text = "0%";
                 }
+            }
+        }
+
+        private void checkboxMKV_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxMKV.Checked)
+            {
+                comboBoxCodec.SelectedItem = "libx264";
+                comboBoxCodec.Enabled = false;
+                comboBoxFrameRate.SelectedItem = "29.97";
+                comboBoxFrameRate.Enabled = false;
+            }
+            else
+            {
+                comboBoxCodec.Enabled = true;
+                comboBoxFrameRate.Enabled = true;
             }
         }
     }

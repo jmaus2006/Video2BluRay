@@ -56,6 +56,7 @@
             checkboxMKV = new CheckBox();
             btnGenerateBluray = new Button();
             label2 = new Label();
+            label3 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -63,11 +64,11 @@
             // btnSelectVid
             // 
             btnSelectVid.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSelectVid.Location = new Point(27, 24);
+            btnSelectVid.Location = new Point(36, 38);
             btnSelectVid.Name = "btnSelectVid";
             btnSelectVid.Size = new Size(337, 53);
             btnSelectVid.TabIndex = 0;
-            btnSelectVid.Text = "Select Video";
+            btnSelectVid.Text = "Select Single Video";
             btnSelectVid.UseVisualStyleBackColor = true;
             btnSelectVid.Click += btnSelectVid_Click;
             // 
@@ -188,15 +189,15 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(33, 621);
+            progressBar1.Location = new Point(30, 911);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(630, 33);
+            progressBar1.Size = new Size(943, 50);
             progressBar1.TabIndex = 14;
             // 
             // labelProgress
             // 
             labelProgress.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelProgress.Location = new Point(670, 611);
+            labelProgress.Location = new Point(979, 911);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new Size(69, 50);
             labelProgress.TabIndex = 15;
@@ -214,11 +215,11 @@
             // 
             btnConcat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConcat.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConcat.Location = new Point(635, 24);
+            btnConcat.Location = new Point(553, 38);
             btnConcat.Name = "btnConcat";
             btnConcat.Size = new Size(337, 53);
             btnConcat.TabIndex = 1;
-            btnConcat.Text = "Concatenate Videos";
+            btnConcat.Text = "Join Multiple Videos";
             btnConcat.UseVisualStyleBackColor = true;
             btnConcat.Click += btnConcat_Click;
             // 
@@ -226,22 +227,22 @@
             // 
             txtArgs.BackColor = SystemColors.ControlLightLight;
             txtArgs.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtArgs.Location = new Point(33, 674);
+            txtArgs.Location = new Point(36, 629);
             txtArgs.Multiline = true;
             txtArgs.Name = "txtArgs";
             txtArgs.ReadOnly = true;
-            txtArgs.Size = new Size(342, 240);
+            txtArgs.Size = new Size(590, 150);
             txtArgs.TabIndex = 9;
             // 
             // btnRun
             // 
             btnRun.Enabled = false;
             btnRun.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(381, 674);
+            btnRun.Location = new Point(36, 812);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(282, 100);
+            btnRun.Size = new Size(590, 73);
             btnRun.TabIndex = 10;
-            btnRun.Text = "Run ffmpeg parameters";
+            btnRun.Text = "Run ffmpeg (Encode video)";
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
             // 
@@ -310,13 +311,14 @@
             // checkboxMKV
             // 
             checkboxMKV.AutoSize = true;
-            checkboxMKV.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(745, 619);
+            checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkboxMKV.Location = new Point(36, 415);
             checkboxMKV.Name = "checkboxMKV";
-            checkboxMKV.Size = new Size(182, 33);
+            checkboxMKV.Size = new Size(348, 41);
             checkboxMKV.TabIndex = 27;
-            checkboxMKV.Text = "Create MKV File";
+            checkboxMKV.Text = "Create MKV File (Blu-ray)";
             checkboxMKV.UseVisualStyleBackColor = true;
+            checkboxMKV.CheckedChanged += checkboxMKV_CheckedChanged;
             // 
             // btnGenerateBluray
             // 
@@ -324,28 +326,41 @@
             btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBluray.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerateBluray.ImageAlign = ContentAlignment.TopRight;
-            btnGenerateBluray.Location = new Point(670, 674);
+            btnGenerateBluray.Location = new Point(687, 703);
             btnGenerateBluray.Name = "btnGenerateBluray";
-            btnGenerateBluray.Size = new Size(321, 240);
+            btnGenerateBluray.Size = new Size(286, 182);
             btnGenerateBluray.TabIndex = 30;
             btnGenerateBluray.UseVisualStyleBackColor = true;
             btnGenerateBluray.Click += btnGenerateBluray_Click;
             // 
             // label2
             // 
+            label2.AllowDrop = true;
             label2.AutoSize = true;
-            label2.Font = new Font("Arial Narrow", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(381, 852);
+            label2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(671, 632);
             label2.Name = "label2";
-            label2.Size = new Size(283, 46);
+            label2.Size = new Size(320, 29);
             label2.TabIndex = 31;
-            label2.Text = "Click to Create -->";
+            label2.Text = "Click below to create blu-ray BDMV";
+            // 
+            // label3
+            // 
+            label3.AllowDrop = true;
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(687, 665);
+            label3.Name = "label3";
+            label3.Size = new Size(292, 29);
+            label3.TabIndex = 32;
+            label3.Text = "directory from existing MKV files";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1003, 944);
+            ClientSize = new Size(1053, 1004);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(btnGenerateBluray);
             Controls.Add(checkboxMKV);
@@ -364,7 +379,7 @@
             Controls.Add(txtArgs);
             Controls.Add(btnRun);
             Name = "Form1";
-            Text = "Video Converter 1.1";
+            Text = "Video Converter 1.2";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
@@ -403,5 +418,6 @@
         private CheckBox checkboxMKV;
         private Button btnGenerateBluray;
         private Label label2;
+        private Label label3;
     }
 }
