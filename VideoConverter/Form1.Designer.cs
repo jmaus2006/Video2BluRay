@@ -52,13 +52,19 @@
             lblBitrateValue = new Label();
             lblCodecValue = new Label();
             groupBox1 = new GroupBox();
+            lblAudioCodec = new Label();
             groupBox2 = new GroupBox();
             checkboxMKV = new CheckBox();
             btnGenerateBluray = new Button();
             label2 = new Label();
             label3 = new Label();
+            groupBox3 = new GroupBox();
+            label4 = new Label();
+            checkboxAC3 = new CheckBox();
+            comboBoxAudioBitrate = new ComboBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelectVid
@@ -76,7 +82,7 @@
             // 
             lblSelectedFile.AutoSize = true;
             lblSelectedFile.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSelectedFile.Location = new Point(24, 80);
+            lblSelectedFile.Location = new Point(36, 94);
             lblSelectedFile.Name = "lblSelectedFile";
             lblSelectedFile.Size = new Size(0, 32);
             lblSelectedFile.TabIndex = 1;
@@ -159,7 +165,7 @@
             // btnConvert
             // 
             btnConvert.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(431, 487);
+            btnConvert.Location = new Point(431, 509);
             btnConvert.Name = "btnConvert";
             btnConvert.Size = new Size(355, 80);
             btnConvert.TabIndex = 8;
@@ -171,7 +177,7 @@
             // 
             lblOutputDir.AutoSize = true;
             lblOutputDir.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOutputDir.Location = new Point(33, 573);
+            lblOutputDir.Location = new Point(33, 595);
             lblOutputDir.Name = "lblOutputDir";
             lblOutputDir.Size = new Size(0, 32);
             lblOutputDir.TabIndex = 13;
@@ -179,7 +185,7 @@
             // btnOutputDir
             // 
             btnOutputDir.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOutputDir.Location = new Point(36, 487);
+            btnOutputDir.Location = new Point(36, 509);
             btnOutputDir.Name = "btnOutputDir";
             btnOutputDir.Size = new Size(373, 80);
             btnOutputDir.TabIndex = 7;
@@ -189,7 +195,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(30, 911);
+            progressBar1.Location = new Point(30, 933);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(943, 50);
             progressBar1.TabIndex = 14;
@@ -197,7 +203,7 @@
             // labelProgress
             // 
             labelProgress.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelProgress.Location = new Point(979, 911);
+            labelProgress.Location = new Point(979, 933);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new Size(69, 50);
             labelProgress.TabIndex = 15;
@@ -206,7 +212,7 @@
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(574, 423);
+            txtFileName.Location = new Point(574, 445);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(324, 31);
             txtFileName.TabIndex = 6;
@@ -215,7 +221,7 @@
             // 
             btnConcat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConcat.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConcat.Location = new Point(553, 38);
+            btnConcat.Location = new Point(560, 38);
             btnConcat.Name = "btnConcat";
             btnConcat.Size = new Size(337, 53);
             btnConcat.TabIndex = 1;
@@ -227,7 +233,7 @@
             // 
             txtArgs.BackColor = SystemColors.ControlLightLight;
             txtArgs.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtArgs.Location = new Point(36, 629);
+            txtArgs.Location = new Point(36, 651);
             txtArgs.Multiline = true;
             txtArgs.Name = "txtArgs";
             txtArgs.ReadOnly = true;
@@ -238,7 +244,7 @@
             // 
             btnRun.Enabled = false;
             btnRun.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(36, 812);
+            btnRun.Location = new Point(36, 834);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(590, 73);
             btnRun.TabIndex = 10;
@@ -250,7 +256,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(431, 423);
+            label1.Location = new Point(431, 445);
             label1.Name = "label1";
             label1.Size = new Size(146, 29);
             label1.TabIndex = 21;
@@ -279,16 +285,24 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(lblAudioCodec);
             groupBox1.Controls.Add(lblCodecValue);
             groupBox1.Controls.Add(lblBitrateValue);
             groupBox1.Controls.Add(lblFpsValue);
             groupBox1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(36, 124);
+            groupBox1.Location = new Point(36, 146);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(383, 274);
             groupBox1.TabIndex = 25;
             groupBox1.TabStop = false;
             groupBox1.Text = "Video Info";
+            // 
+            // lblAudioCodec
+            // 
+            lblAudioCodec.Location = new Point(78, 201);
+            lblAudioCodec.Name = "lblAudioCodec";
+            lblAudioCodec.Size = new Size(250, 30);
+            lblAudioCodec.TabIndex = 24;
             // 
             // groupBox2
             // 
@@ -301,18 +315,18 @@
             groupBox2.Controls.Add(lblCodec);
             groupBox2.Controls.Add(lblInterpolate);
             groupBox2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox2.Location = new Point(444, 124);
+            groupBox2.Location = new Point(444, 146);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(453, 274);
             groupBox2.TabIndex = 26;
             groupBox2.TabStop = false;
-            groupBox2.Text = "New Parameters";
+            groupBox2.Text = "Output Video";
             // 
             // checkboxMKV
             // 
             checkboxMKV.AutoSize = true;
             checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(36, 415);
+            checkboxMKV.Location = new Point(36, 437);
             checkboxMKV.Name = "checkboxMKV";
             checkboxMKV.Size = new Size(348, 41);
             checkboxMKV.TabIndex = 27;
@@ -326,7 +340,7 @@
             btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBluray.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerateBluray.ImageAlign = ContentAlignment.TopRight;
-            btnGenerateBluray.Location = new Point(687, 703);
+            btnGenerateBluray.Location = new Point(687, 725);
             btnGenerateBluray.Name = "btnGenerateBluray";
             btnGenerateBluray.Size = new Size(286, 182);
             btnGenerateBluray.TabIndex = 30;
@@ -338,7 +352,7 @@
             label2.AllowDrop = true;
             label2.AutoSize = true;
             label2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(671, 632);
+            label2.Location = new Point(671, 654);
             label2.Name = "label2";
             label2.Size = new Size(320, 29);
             label2.TabIndex = 31;
@@ -349,17 +363,62 @@
             label3.AllowDrop = true;
             label3.AutoSize = true;
             label3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(687, 665);
+            label3.Location = new Point(687, 687);
             label3.Name = "label3";
             label3.Size = new Size(292, 29);
             label3.TabIndex = 32;
             label3.Text = "directory from existing MKV files";
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label4);
+            groupBox3.Controls.Add(checkboxAC3);
+            groupBox3.Controls.Add(comboBoxAudioBitrate);
+            groupBox3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox3.Location = new Point(922, 146);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(241, 332);
+            groupBox3.TabIndex = 33;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Output Audio";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(16, 105);
+            label4.Name = "label4";
+            label4.Size = new Size(69, 29);
+            label4.TabIndex = 8;
+            label4.Text = "Bitrate";
+            // 
+            // checkboxAC3
+            // 
+            checkboxAC3.AutoSize = true;
+            checkboxAC3.Location = new Point(19, 61);
+            checkboxAC3.Name = "checkboxAC3";
+            checkboxAC3.Size = new Size(211, 33);
+            checkboxAC3.TabIndex = 0;
+            checkboxAC3.Text = "AC3 Audio (blu-ray)";
+            checkboxAC3.UseVisualStyleBackColor = true;
+            checkboxAC3.CheckedChanged += checkboxAC3_CheckedChanged;
+            // 
+            // comboBoxAudioBitrate
+            // 
+            comboBoxAudioBitrate.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxAudioBitrate.FormattingEnabled = true;
+            comboBoxAudioBitrate.Items.AddRange(new object[] { "Original", "192k", "224k", "256k", "320k", "384k", "448k", "512k", "640k" });
+            comboBoxAudioBitrate.Location = new Point(91, 99);
+            comboBoxAudioBitrate.Name = "comboBoxAudioBitrate";
+            comboBoxAudioBitrate.Size = new Size(139, 37);
+            comboBoxAudioBitrate.TabIndex = 1;
+            comboBoxAudioBitrate.SelectedIndexChanged += comboBoxAudioBitrate_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1053, 1004);
+            ClientSize = new Size(1201, 1035);
+            Controls.Add(groupBox3);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(btnGenerateBluray);
@@ -379,11 +438,13 @@
             Controls.Add(txtArgs);
             Controls.Add(btnRun);
             Name = "Form1";
-            Text = "Video Converter 1.2";
+            Text = "Video Converter 1.3";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -419,5 +480,10 @@
         private Button btnGenerateBluray;
         private Label label2;
         private Label label3;
+        private GroupBox groupBox3;
+        private CheckBox checkboxAC3;
+        private Label lblAudioCodec;
+        private ComboBox comboBoxAudioBitrate;
+        private Label label4;
     }
 }

@@ -11,9 +11,10 @@ namespace VideoConverter
 
         private class VideoInfo
         {
-            public string Codec { get; set; }
+            public string? Codec { get; set; }
             public double? Fps { get; set; }
-            public string Bitrate { get; set; }
+            public string? Bitrate { get; set; }
+            public string? AudioCodec { get; set; } // Added audio codec
         }
         private VideoInfo selectedVideoInfo = null;
 
@@ -27,6 +28,7 @@ namespace VideoConverter
             lblFpsValue.Text = string.Empty;
             lblBitrateValue.Text = string.Empty;
             lblCodecValue.Text = "No video selected";
+            comboBoxAudioBitrate.SelectedItem = "Original";
             // Set only the background image for btnGenerateBluray and stretch it
             btnGenerateBluray.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
             btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
@@ -54,6 +56,7 @@ namespace VideoConverter
                         lblFpsValue.Text = $"Frames per second: {(selectedVideoInfo.Fps?.ToString() ?? "N/A" )}";
                         lblBitrateValue.Text = $"Bitrate: {selectedVideoInfo.Bitrate ?? "N/A"}";
                         lblCodecValue.Text = $"Codec: {selectedVideoInfo.Codec ?? "N/A"}";
+                        lblAudioCodec.Text = $"Audio: {selectedVideoInfo.AudioCodec ?? "N/A"}";
                     }
                     else
                     {
@@ -99,6 +102,10 @@ namespace VideoConverter
                 var bitrateMatch = System.Text.RegularExpressions.Regex.Match(output, @"bitrate: (\d+ kb/s)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
                 if (bitrateMatch.Success)
                     info.Bitrate = bitrateMatch.Groups[1].Value.Trim();
+                // Audio Codec
+                var audioMatch = System.Text.RegularExpressions.Regex.Match(output, @"Audio: ([^,]+)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (audioMatch.Success)
+                    info.AudioCodec = audioMatch.Groups[1].Value.Trim();
                 return info;
             }
             catch { return null; }
@@ -193,6 +200,11 @@ namespace VideoConverter
                 inputArg = $"-i \"{inputFile}\" ";
             }
             string args;
+            string audioArg = "";
+            if (checkboxAC3 != null && checkboxAC3.Checked)
+            {
+                audioArg = "-c:a ac3 -b:a 640k ";
+            }
             if (isMKV)
             {
                 // Blu-ray compliant mkv
@@ -200,7 +212,7 @@ namespace VideoConverter
             }
             else
             {
-                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 \"{outputFile}\"";
+                args = $"{inputArg}{vfArg}{rArg}-b:v {bitrate} -c:v {codec} -profile:v high -level 4.1 {audioArg}\"{outputFile}\"";
             }
             txtArgs.Text = "ffmpeg " + args;
             btnRun.Enabled = true;
@@ -549,11 +561,38 @@ namespace VideoConverter
                 comboBoxCodec.Enabled = false;
                 comboBoxFrameRate.SelectedItem = "29.97";
                 comboBoxFrameRate.Enabled = false;
+                checkboxAC3.Checked = true;
+                checkboxAC3.Enabled = false;
+                comboBoxAudioBitrate.SelectedItem = "640k";
+                comboBoxAudioBitrate.Enabled = false;
             }
             else
             {
                 comboBoxCodec.Enabled = true;
                 comboBoxFrameRate.Enabled = true;
+                checkboxAC3.Enabled = true;
+                comboBoxAudioBitrate.Enabled = true;
+            }
+        }
+
+        private void checkboxAC3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkboxAC3.Checked)
+            {
+                comboBoxAudioBitrate.SelectedItem = "640k";
+                comboBoxAudioBitrate.Enabled = false;
+            }
+            else
+            {
+                comboBoxAudioBitrate.Enabled = true;
+            }
+        }
+
+        private void comboBoxAudioBitrate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxAudioBitrate.SelectedItem != null && comboBoxAudioBitrate.SelectedItem.ToString() != "640k")
+            {
+                checkboxAC3.Checked = false;
             }
         }
     }
