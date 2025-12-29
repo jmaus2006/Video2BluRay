@@ -53,24 +53,34 @@
             lblCodecValue = new Label();
             groupBox1 = new GroupBox();
             lblAudioCodec = new Label();
-            groupBox2 = new GroupBox();
-            checkboxMKV = new CheckBox();
-            btnGenerateBluray = new Button();
-            label2 = new Label();
-            label3 = new Label();
+            tabControl1 = new TabControl();
+            ConverterTab = new TabPage();
             groupBox3 = new GroupBox();
             label4 = new Label();
             checkboxAC3 = new CheckBox();
             comboBoxAudioBitrate = new ComboBox();
+            checkboxMKV = new CheckBox();
+            groupBox2 = new GroupBox();
+            BlurayTab = new TabPage();
+            labelProgressBluray = new Label();
+            progressBarBluRayTab = new ProgressBar();
+            lblOutputDirectoryBlurayTab = new Label();
+            outputDirectoryButtonBlurayTab = new Button();
+            label3 = new Label();
+            label2 = new Label();
+            btnGenerateBlurayBlurayTab = new Button();
             groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
+            tabControl1.SuspendLayout();
+            ConverterTab.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox2.SuspendLayout();
+            BlurayTab.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelectVid
             // 
             btnSelectVid.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSelectVid.Location = new Point(36, 38);
+            btnSelectVid.Location = new Point(20, 6);
             btnSelectVid.Name = "btnSelectVid";
             btnSelectVid.Size = new Size(337, 53);
             btnSelectVid.TabIndex = 0;
@@ -82,7 +92,7 @@
             // 
             lblSelectedFile.AutoSize = true;
             lblSelectedFile.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSelectedFile.Location = new Point(36, 94);
+            lblSelectedFile.Location = new Point(20, 72);
             lblSelectedFile.Name = "lblSelectedFile";
             lblSelectedFile.Size = new Size(0, 32);
             lblSelectedFile.TabIndex = 1;
@@ -165,7 +175,7 @@
             // btnConvert
             // 
             btnConvert.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConvert.Location = new Point(431, 509);
+            btnConvert.Location = new Point(415, 477);
             btnConvert.Name = "btnConvert";
             btnConvert.Size = new Size(355, 80);
             btnConvert.TabIndex = 8;
@@ -177,7 +187,7 @@
             // 
             lblOutputDir.AutoSize = true;
             lblOutputDir.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblOutputDir.Location = new Point(33, 595);
+            lblOutputDir.Location = new Point(20, 568);
             lblOutputDir.Name = "lblOutputDir";
             lblOutputDir.Size = new Size(0, 32);
             lblOutputDir.TabIndex = 13;
@@ -185,7 +195,7 @@
             // btnOutputDir
             // 
             btnOutputDir.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOutputDir.Location = new Point(36, 509);
+            btnOutputDir.Location = new Point(20, 477);
             btnOutputDir.Name = "btnOutputDir";
             btnOutputDir.Size = new Size(373, 80);
             btnOutputDir.TabIndex = 7;
@@ -195,7 +205,7 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(30, 933);
+            progressBar1.Location = new Point(20, 784);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(943, 50);
             progressBar1.TabIndex = 14;
@@ -203,7 +213,7 @@
             // labelProgress
             // 
             labelProgress.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelProgress.Location = new Point(979, 933);
+            labelProgress.Location = new Point(969, 784);
             labelProgress.Name = "labelProgress";
             labelProgress.Size = new Size(69, 50);
             labelProgress.TabIndex = 15;
@@ -212,7 +222,7 @@
             // 
             // txtFileName
             // 
-            txtFileName.Location = new Point(574, 445);
+            txtFileName.Location = new Point(558, 413);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(324, 31);
             txtFileName.TabIndex = 6;
@@ -221,7 +231,7 @@
             // 
             btnConcat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConcat.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConcat.Location = new Point(560, 38);
+            btnConcat.Location = new Point(646, 3);
             btnConcat.Name = "btnConcat";
             btnConcat.Size = new Size(337, 53);
             btnConcat.TabIndex = 1;
@@ -233,20 +243,20 @@
             // 
             txtArgs.BackColor = SystemColors.ControlLightLight;
             txtArgs.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtArgs.Location = new Point(36, 651);
+            txtArgs.Location = new Point(20, 619);
             txtArgs.Multiline = true;
             txtArgs.Name = "txtArgs";
             txtArgs.ReadOnly = true;
-            txtArgs.Size = new Size(590, 150);
+            txtArgs.Size = new Size(943, 150);
             txtArgs.TabIndex = 9;
             // 
             // btnRun
             // 
             btnRun.Enabled = false;
             btnRun.Font = new Font("Arial Narrow", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(36, 834);
+            btnRun.Location = new Point(776, 477);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(590, 73);
+            btnRun.Size = new Size(371, 80);
             btnRun.TabIndex = 10;
             btnRun.Text = "Run ffmpeg (Encode video)";
             btnRun.UseVisualStyleBackColor = true;
@@ -256,7 +266,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(431, 445);
+            label1.Location = new Point(412, 410);
             label1.Name = "label1";
             label1.Size = new Size(146, 29);
             label1.TabIndex = 21;
@@ -290,7 +300,7 @@
             groupBox1.Controls.Add(lblBitrateValue);
             groupBox1.Controls.Add(lblFpsValue);
             groupBox1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox1.Location = new Point(36, 146);
+            groupBox1.Location = new Point(20, 114);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(383, 274);
             groupBox1.TabIndex = 25;
@@ -304,70 +314,41 @@
             lblAudioCodec.Size = new Size(250, 30);
             lblAudioCodec.TabIndex = 24;
             // 
-            // groupBox2
+            // tabControl1
             // 
-            groupBox2.Controls.Add(comboBoxFrameRate);
-            groupBox2.Controls.Add(comboBoxBitrate);
-            groupBox2.Controls.Add(comboBoxCodec);
-            groupBox2.Controls.Add(comboBoxInterpolation);
-            groupBox2.Controls.Add(lblFps);
-            groupBox2.Controls.Add(lblBitrate);
-            groupBox2.Controls.Add(lblCodec);
-            groupBox2.Controls.Add(lblInterpolate);
-            groupBox2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox2.Location = new Point(444, 146);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(453, 274);
-            groupBox2.TabIndex = 26;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Output Video";
+            tabControl1.Controls.Add(ConverterTab);
+            tabControl1.Controls.Add(BlurayTab);
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(1175, 896);
+            tabControl1.TabIndex = 9;
             // 
-            // checkboxMKV
+            // ConverterTab
             // 
-            checkboxMKV.AutoSize = true;
-            checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkboxMKV.Location = new Point(36, 437);
-            checkboxMKV.Name = "checkboxMKV";
-            checkboxMKV.Size = new Size(348, 41);
-            checkboxMKV.TabIndex = 27;
-            checkboxMKV.Text = "Create MKV File (Blu-ray)";
-            checkboxMKV.UseVisualStyleBackColor = true;
-            checkboxMKV.CheckedChanged += checkboxMKV_CheckedChanged;
-            // 
-            // btnGenerateBluray
-            // 
-            btnGenerateBluray.BackgroundImage = Properties.Resources.bluray;
-            btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
-            btnGenerateBluray.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnGenerateBluray.ImageAlign = ContentAlignment.TopRight;
-            btnGenerateBluray.Location = new Point(687, 725);
-            btnGenerateBluray.Name = "btnGenerateBluray";
-            btnGenerateBluray.Size = new Size(286, 182);
-            btnGenerateBluray.TabIndex = 30;
-            btnGenerateBluray.UseVisualStyleBackColor = true;
-            btnGenerateBluray.Click += btnGenerateBluray_Click;
-            // 
-            // label2
-            // 
-            label2.AllowDrop = true;
-            label2.AutoSize = true;
-            label2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(671, 654);
-            label2.Name = "label2";
-            label2.Size = new Size(320, 29);
-            label2.TabIndex = 31;
-            label2.Text = "Click below to create blu-ray BDMV";
-            // 
-            // label3
-            // 
-            label3.AllowDrop = true;
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(687, 687);
-            label3.Name = "label3";
-            label3.Size = new Size(292, 29);
-            label3.TabIndex = 32;
-            label3.Text = "directory from existing MKV files";
+            ConverterTab.BackColor = SystemColors.Control;
+            ConverterTab.Controls.Add(btnSelectVid);
+            ConverterTab.Controls.Add(lblOutputDir);
+            ConverterTab.Controls.Add(btnConcat);
+            ConverterTab.Controls.Add(lblSelectedFile);
+            ConverterTab.Controls.Add(groupBox3);
+            ConverterTab.Controls.Add(btnRun);
+            ConverterTab.Controls.Add(txtArgs);
+            ConverterTab.Controls.Add(labelProgress);
+            ConverterTab.Controls.Add(progressBar1);
+            ConverterTab.Controls.Add(checkboxMKV);
+            ConverterTab.Controls.Add(btnConvert);
+            ConverterTab.Controls.Add(groupBox2);
+            ConverterTab.Controls.Add(btnOutputDir);
+            ConverterTab.Controls.Add(groupBox1);
+            ConverterTab.Controls.Add(txtFileName);
+            ConverterTab.Controls.Add(label1);
+            ConverterTab.Location = new Point(4, 34);
+            ConverterTab.Margin = new Padding(0);
+            ConverterTab.Name = "ConverterTab";
+            ConverterTab.Size = new Size(1167, 858);
+            ConverterTab.TabIndex = 1;
+            ConverterTab.Text = "Converter";
             // 
             // groupBox3
             // 
@@ -375,7 +356,7 @@
             groupBox3.Controls.Add(checkboxAC3);
             groupBox3.Controls.Add(comboBoxAudioBitrate);
             groupBox3.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            groupBox3.Location = new Point(922, 146);
+            groupBox3.Location = new Point(906, 114);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(241, 332);
             groupBox3.TabIndex = 33;
@@ -413,40 +394,145 @@
             comboBoxAudioBitrate.TabIndex = 1;
             comboBoxAudioBitrate.SelectedIndexChanged += comboBoxAudioBitrate_SelectedIndexChanged;
             // 
+            // checkboxMKV
+            // 
+            checkboxMKV.AutoSize = true;
+            checkboxMKV.Font = new Font("Arial Narrow", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkboxMKV.Location = new Point(17, 402);
+            checkboxMKV.Name = "checkboxMKV";
+            checkboxMKV.Size = new Size(348, 41);
+            checkboxMKV.TabIndex = 27;
+            checkboxMKV.Text = "Create MKV File (Blu-ray)";
+            checkboxMKV.UseVisualStyleBackColor = true;
+            checkboxMKV.CheckedChanged += checkboxMKV_CheckedChanged;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(comboBoxFrameRate);
+            groupBox2.Controls.Add(comboBoxBitrate);
+            groupBox2.Controls.Add(comboBoxCodec);
+            groupBox2.Controls.Add(comboBoxInterpolation);
+            groupBox2.Controls.Add(lblFps);
+            groupBox2.Controls.Add(lblBitrate);
+            groupBox2.Controls.Add(lblCodec);
+            groupBox2.Controls.Add(lblInterpolate);
+            groupBox2.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox2.Location = new Point(428, 114);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(453, 274);
+            groupBox2.TabIndex = 26;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Output Video";
+            // 
+            // BlurayTab
+            // 
+            BlurayTab.BackColor = SystemColors.Control;
+            BlurayTab.Controls.Add(labelProgressBluray);
+            BlurayTab.Controls.Add(progressBarBluRayTab);
+            BlurayTab.Controls.Add(lblOutputDirectoryBlurayTab);
+            BlurayTab.Controls.Add(outputDirectoryButtonBlurayTab);
+            BlurayTab.Controls.Add(label3);
+            BlurayTab.Controls.Add(label2);
+            BlurayTab.Controls.Add(btnGenerateBlurayBlurayTab);
+            BlurayTab.Location = new Point(4, 34);
+            BlurayTab.Name = "BlurayTab";
+            BlurayTab.Padding = new Padding(3);
+            BlurayTab.Size = new Size(1167, 858);
+            BlurayTab.TabIndex = 0;
+            BlurayTab.Text = "Create Blu-ray";
+            // 
+            // labelProgressBluray
+            // 
+            labelProgressBluray.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelProgressBluray.Location = new Point(1060, 784);
+            labelProgressBluray.Name = "labelProgressBluray";
+            labelProgressBluray.Size = new Size(69, 50);
+            labelProgressBluray.TabIndex = 39;
+            labelProgressBluray.Text = "0%";
+            labelProgressBluray.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // progressBarBluRayTab
+            // 
+            progressBarBluRayTab.Location = new Point(111, 784);
+            progressBarBluRayTab.Name = "progressBarBluRayTab";
+            progressBarBluRayTab.Size = new Size(943, 50);
+            progressBarBluRayTab.TabIndex = 38;
+            // 
+            // lblOutputDirectoryBlurayTab
+            // 
+            lblOutputDirectoryBlurayTab.AutoSize = true;
+            lblOutputDirectoryBlurayTab.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblOutputDirectoryBlurayTab.Location = new Point(27, 103);
+            lblOutputDirectoryBlurayTab.Name = "lblOutputDirectoryBlurayTab";
+            lblOutputDirectoryBlurayTab.Size = new Size(0, 32);
+            lblOutputDirectoryBlurayTab.TabIndex = 37;
+            // 
+            // outputDirectoryButtonBlurayTab
+            // 
+            outputDirectoryButtonBlurayTab.Font = new Font("Arial Narrow", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            outputDirectoryButtonBlurayTab.Location = new Point(30, 23);
+            outputDirectoryButtonBlurayTab.Name = "outputDirectoryButtonBlurayTab";
+            outputDirectoryButtonBlurayTab.Size = new Size(373, 80);
+            outputDirectoryButtonBlurayTab.TabIndex = 36;
+            outputDirectoryButtonBlurayTab.Text = "Select Output Directory";
+            outputDirectoryButtonBlurayTab.UseVisualStyleBackColor = true;
+            outputDirectoryButtonBlurayTab.Click += btnOutputDir_Click;
+            // 
+            // label3
+            // 
+            label3.AllowDrop = true;
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial Narrow", 24F);
+            label3.Location = new Point(273, 230);
+            label3.Name = "label3";
+            label3.Size = new Size(591, 57);
+            label3.TabIndex = 35;
+            label3.Text = "directory from existing MKV files";
+            // 
+            // label2
+            // 
+            label2.AllowDrop = true;
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial Narrow", 24F);
+            label2.Location = new Point(247, 173);
+            label2.Name = "label2";
+            label2.Size = new Size(646, 57);
+            label2.TabIndex = 34;
+            label2.Text = "Click below to create blu-ray BDMV";
+            // 
+            // btnGenerateBlurayBlurayTab
+            // 
+            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray;
+            btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
+            btnGenerateBlurayBlurayTab.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGenerateBlurayBlurayTab.ImageAlign = ContentAlignment.TopRight;
+            btnGenerateBlurayBlurayTab.Location = new Point(111, 302);
+            btnGenerateBlurayBlurayTab.Name = "btnGenerateBlurayBlurayTab";
+            btnGenerateBlurayBlurayTab.Size = new Size(937, 465);
+            btnGenerateBlurayBlurayTab.TabIndex = 33;
+            btnGenerateBlurayBlurayTab.UseVisualStyleBackColor = true;
+            btnGenerateBlurayBlurayTab.Click += btnGenerateBluray_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1201, 1035);
-            Controls.Add(groupBox3);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(btnGenerateBluray);
-            Controls.Add(checkboxMKV);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
-            Controls.Add(label1);
-            Controls.Add(btnConcat);
-            Controls.Add(txtFileName);
-            Controls.Add(lblOutputDir);
-            Controls.Add(btnOutputDir);
-            Controls.Add(btnConvert);
-            Controls.Add(lblSelectedFile);
-            Controls.Add(btnSelectVid);
-            Controls.Add(progressBar1);
-            Controls.Add(labelProgress);
-            Controls.Add(txtArgs);
-            Controls.Add(btnRun);
+            ClientSize = new Size(1175, 894);
+            Controls.Add(tabControl1);
             Name = "Form1";
-            Text = "Video Converter 1.3";
+            Text = "Video Converter 1.4";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            tabControl1.ResumeLayout(false);
+            ConverterTab.ResumeLayout(false);
+            ConverterTab.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            BlurayTab.ResumeLayout(false);
+            BlurayTab.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -477,13 +563,20 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private CheckBox checkboxMKV;
-        private Button btnGenerateBluray;
-        private Label label2;
-        private Label label3;
         private GroupBox groupBox3;
         private CheckBox checkboxAC3;
         private Label lblAudioCodec;
         private ComboBox comboBoxAudioBitrate;
         private Label label4;
+        private TabControl tabControl1;
+        private TabPage BlurayTab;
+        private TabPage ConverterTab;
+        private Label label3;
+        private Label label2;
+        private Button btnGenerateBlurayBlurayTab;
+        private Label lblOutputDirectoryBlurayTab;
+        private Button outputDirectoryButtonBlurayTab;
+        private Label labelProgressBluray;
+        private ProgressBar progressBarBluRayTab;
     }
 }

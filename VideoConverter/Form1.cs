@@ -30,14 +30,15 @@ namespace VideoConverter
             lblCodecValue.Text = "No video selected";
             comboBoxAudioBitrate.SelectedItem = "Original";
             // Set only the background image for btnGenerateBluray and stretch it
-            btnGenerateBluray.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
-            btnGenerateBluray.BackgroundImageLayout = ImageLayout.Stretch;
-            btnGenerateBluray.Text = string.Empty;
+            btnGenerateBlurayBlurayTab.BackgroundImage = Properties.Resources.bluray; // Replace 'bluray' with your actual resource name
+            btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
+            btnGenerateBlurayBlurayTab.Text = string.Empty;
             // Load last output directory if available
             string lastDir = Properties.Settings.Default.LastOutputDir;
             if (!string.IsNullOrWhiteSpace(lastDir) && System.IO.Directory.Exists(lastDir))
             {
                 lblOutputDir.Text = lastDir;
+                lblOutputDirectoryBlurayTab.Text = lastDir;
             }
         }
 
@@ -118,6 +119,7 @@ namespace VideoConverter
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     lblOutputDir.Text = folderDialog.SelectedPath;
+                    lblOutputDirectoryBlurayTab.Text = folderDialog.SelectedPath;
                     // Save to settings
                     Properties.Settings.Default.LastOutputDir = folderDialog.SelectedPath;
                     Properties.Settings.Default.Save();
@@ -232,6 +234,8 @@ namespace VideoConverter
             }
             progressBar1.Value = 0;
             labelProgress.Text = "0%";
+            progressBarBluRayTab.Value = 0;
+            labelProgressBluray.Text = "0%";
             var duration = pendingDuration;
             if (duration == null)
             {
@@ -262,6 +266,8 @@ namespace VideoConverter
                         {
                             progressBar1.Value = percent;
                             labelProgress.Text = percent + "%";
+                            progressBarBluRayTab.Value = percent;
+                            labelProgressBluray.Text = percent + "%";
                         }));
                     }
                 }
@@ -271,10 +277,14 @@ namespace VideoConverter
             {
                 progressBar1.Value = 100;
                 labelProgress.Text = "100%";
+                progressBarBluRayTab.Value = 100;
+                labelProgressBluray.Text = "100%";
                 MessageBox.Show("Conversion completed successfully!");
                 await Task.Delay(1000);
                 progressBar1.Value = 0;
                 labelProgress.Text = "0%";
+                progressBarBluRayTab.Value = 0;
+                labelProgressBluray.Text = "0%";
                 lblSelectedFile.Text = string.Empty;
             }
             else
@@ -424,7 +434,11 @@ namespace VideoConverter
                     progressBar1.Minimum = 0;
                     progressBar1.Maximum = fileCount;
                     progressBar1.Value = 0;
+                    progressBarBluRayTab.Minimum = 0;
+                    progressBarBluRayTab.Maximum = fileCount;
+                    progressBarBluRayTab.Value = 0;
                     labelProgress.Text = $"0/{fileCount}";
+                    labelProgressBluray.Text = $"0/{fileCount}";
                     string[] bdmvDirs = new string[fileCount];
                     string[] metaFiles = new string[fileCount];
                     for (int i = 0; i < fileCount; i++)
@@ -462,6 +476,8 @@ namespace VideoConverter
                         // Update progress bar after each file
                         progressBar1.Value = i + 1;
                         labelProgress.Text = $"{i + 1}/{fileCount}";
+                        progressBarBluRayTab.Value = i + 1;
+                        labelProgressBluray.Text = $"{i + 1}/{fileCount}";
                         await Task.Delay(100); // Small delay for UI update
                     }
                     // --- Merging Step ---
@@ -549,6 +565,8 @@ namespace VideoConverter
                     await Task.Delay(1000);
                     progressBar1.Value = 0;
                     labelProgress.Text = "0%";
+                    progressBarBluRayTab.Value = 0;
+                    labelProgressBluray.Text = "0%";
                 }
             }
         }
