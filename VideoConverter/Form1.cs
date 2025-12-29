@@ -137,7 +137,12 @@ namespace VideoConverter
             // Get input file and output directory
             string inputFile = lblSelectedFile.Text;
             string outputDir = lblOutputDir.Text;
-            string newFileName = txtFileName.Text.Trim() ?? "outputVideo.mp4";
+            string newFileName = txtFileName.Text.Trim();
+            if (string.IsNullOrWhiteSpace(newFileName))
+            {
+                MessageBox.Show("You must enter a new file name before creating ffmpeg parameters.", "Missing File Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             bool isMKV = checkboxMKV != null && checkboxMKV.Checked;
             if (isMKV)
             {

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             btnSelectVid = new Button();
             lblSelectedFile = new Label();
             comboBoxFrameRate = new ComboBox();
@@ -69,12 +70,16 @@
             label3 = new Label();
             label2 = new Label();
             btnGenerateBlurayBlurayTab = new Button();
+            stepsToConvertTab = new TabPage();
+            label5 = new Label();
+            richTextBox1 = new RichTextBox();
             groupBox1.SuspendLayout();
             tabControl1.SuspendLayout();
             ConverterTab.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             BlurayTab.SuspendLayout();
+            stepsToConvertTab.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelectVid
@@ -224,7 +229,7 @@
             // 
             txtFileName.Location = new Point(558, 413);
             txtFileName.Name = "txtFileName";
-            txtFileName.Size = new Size(324, 31);
+            txtFileName.Size = new Size(324, 35);
             txtFileName.TabIndex = 6;
             // 
             // btnConcat
@@ -316,8 +321,11 @@
             // 
             // tabControl1
             // 
+            tabControl1.Appearance = TabAppearance.Buttons;
             tabControl1.Controls.Add(ConverterTab);
             tabControl1.Controls.Add(BlurayTab);
+            tabControl1.Controls.Add(stepsToConvertTab);
+            tabControl1.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -343,10 +351,10 @@
             ConverterTab.Controls.Add(groupBox1);
             ConverterTab.Controls.Add(txtFileName);
             ConverterTab.Controls.Add(label1);
-            ConverterTab.Location = new Point(4, 34);
+            ConverterTab.Location = new Point(4, 41);
             ConverterTab.Margin = new Padding(0);
             ConverterTab.Name = "ConverterTab";
-            ConverterTab.Size = new Size(1167, 858);
+            ConverterTab.Size = new Size(1167, 851);
             ConverterTab.TabIndex = 1;
             ConverterTab.Text = "Converter";
             // 
@@ -434,10 +442,10 @@
             BlurayTab.Controls.Add(label3);
             BlurayTab.Controls.Add(label2);
             BlurayTab.Controls.Add(btnGenerateBlurayBlurayTab);
-            BlurayTab.Location = new Point(4, 34);
+            BlurayTab.Location = new Point(4, 41);
             BlurayTab.Name = "BlurayTab";
             BlurayTab.Padding = new Padding(3);
-            BlurayTab.Size = new Size(1167, 858);
+            BlurayTab.Size = new Size(1167, 851);
             BlurayTab.TabIndex = 0;
             BlurayTab.Text = "Create Blu-ray";
             // 
@@ -506,12 +514,43 @@
             btnGenerateBlurayBlurayTab.BackgroundImageLayout = ImageLayout.Stretch;
             btnGenerateBlurayBlurayTab.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGenerateBlurayBlurayTab.ImageAlign = ContentAlignment.TopRight;
-            btnGenerateBlurayBlurayTab.Location = new Point(111, 302);
+            btnGenerateBlurayBlurayTab.Location = new Point(247, 324);
             btnGenerateBlurayBlurayTab.Name = "btnGenerateBlurayBlurayTab";
-            btnGenerateBlurayBlurayTab.Size = new Size(937, 465);
+            btnGenerateBlurayBlurayTab.Size = new Size(646, 395);
             btnGenerateBlurayBlurayTab.TabIndex = 33;
             btnGenerateBlurayBlurayTab.UseVisualStyleBackColor = true;
             btnGenerateBlurayBlurayTab.Click += btnGenerateBluray_Click;
+            // 
+            // stepsToConvertTab
+            // 
+            stepsToConvertTab.Controls.Add(label5);
+            stepsToConvertTab.Controls.Add(richTextBox1);
+            stepsToConvertTab.Location = new Point(4, 41);
+            stepsToConvertTab.Name = "stepsToConvertTab";
+            stepsToConvertTab.Padding = new Padding(3);
+            stepsToConvertTab.Size = new Size(1167, 851);
+            stepsToConvertTab.TabIndex = 2;
+            stepsToConvertTab.Text = "Steps to converting";
+            stepsToConvertTab.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Arial Narrow", 28F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Location = new Point(66, 47);
+            label5.Name = "label5";
+            label5.Size = new Size(620, 66);
+            label5.TabIndex = 1;
+            label5.Text = "How to make a blu-ray folder";
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Font = new Font("Arial Narrow", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            richTextBox1.Location = new Point(66, 150);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(894, 403);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
             // Form1
             // 
@@ -532,6 +571,8 @@
             groupBox2.PerformLayout();
             BlurayTab.ResumeLayout(false);
             BlurayTab.PerformLayout();
+            stepsToConvertTab.ResumeLayout(false);
+            stepsToConvertTab.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -578,5 +619,8 @@
         private Button outputDirectoryButtonBlurayTab;
         private Label labelProgressBluray;
         private ProgressBar progressBarBluRayTab;
+        private TabPage stepsToConvertTab;
+        private RichTextBox richTextBox1;
+        private Label label5;
     }
 }
