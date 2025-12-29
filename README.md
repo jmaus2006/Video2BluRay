@@ -28,4 +28,7 @@ Icon added<br>
 Audio settings group box added<br>
 Audio bitrate settings<br>
 AC3 checkbox for blu-ray compliance<br>
-
+<hr><br><br>
+<h1>1.4 - New Release</h1>
+Tabs added<br>
+Updated UI<br>
