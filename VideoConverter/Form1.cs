@@ -1,3 +1,18 @@
+// Copyright (c) 2025 Joel Maus
+// This file is part of Video2BluRay.
+// Video2BluRay is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Video2BluRay is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Video2BluRay.  If not, see <https://www.gnu.org/licenses/>.
+
 using System.Configuration;
 
 namespace VideoConverter
@@ -70,15 +85,6 @@ namespace VideoConverter
             btnGenerateBlurayBlurayTab.AllowDrop = true;
             btnGenerateBlurayBlurayTab.DragEnter += btnGenerateBlurayBlurayTab_DragEnter;
             btnGenerateBlurayBlurayTab.DragDrop += btnGenerateBlurayBlurayTab_DragDrop;
-
-            // Check for ffmpeg and tsmuxer in PATH
-            bool ffmpegFound = IsExeInPath("ffmpeg.exe");
-            bool tsmuxerFound = IsExeInPath("tsmuxer.exe");
-            if (!ffmpegFound || !tsmuxerFound)
-            {
-                string missing = (!ffmpegFound && !tsmuxerFound) ? "ffmpeg.exe and tsmuxer.exe" : (!ffmpegFound ? "ffmpeg.exe" : "tsmuxer.exe");
-                MessageBox.Show($"{missing} not found in your system PATH. Please install or add them to PATH for full functionality.", "Missing Executable", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnSelectVid_Click(object sender, EventArgs e)
@@ -115,12 +121,18 @@ namespace VideoConverter
             }
         }
 
+        // Helper to get bundled exe path
+        private string GetBundledExePath(string exeName)
+        {
+            return System.IO.Path.Combine(Application.StartupPath, exeName);
+        }
+
         private VideoInfo GetVideoInfo(string filePath)
         {
             try
             {
                 var process = new System.Diagnostics.Process();
-                process.StartInfo.FileName = "ffmpeg.exe";
+                process.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
                 process.StartInfo.Arguments = $"-i \"{filePath}\"";
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardError = true;
@@ -297,7 +309,7 @@ namespace VideoConverter
                 return;
             }
             var process = new System.Diagnostics.Process();
-            process.StartInfo.FileName = "ffmpeg.exe";
+            process.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
             process.StartInfo.Arguments = pendingArgs;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -397,7 +409,7 @@ namespace VideoConverter
                 try
                 {
                     var probe = new System.Diagnostics.Process();
-                    probe.StartInfo.FileName = "ffmpeg.exe";
+                    probe.StartInfo.FileName = GetBundledExePath("ffmpeg.exe");
                     probe.StartInfo.Arguments = $"-i \"{inputFile}\"";
                     probe.StartInfo.UseShellExecute = false;
                     probe.StartInfo.RedirectStandardError = true;
@@ -528,7 +540,7 @@ namespace VideoConverter
                             if (!Directory.Exists(bdmvDir))
                                 Directory.CreateDirectory(bdmvDir);
                             var process = new System.Diagnostics.Process();
-                            process.StartInfo.FileName = "tsmuxer.exe";
+                            process.StartInfo.FileName = GetBundledExePath("tsmuxer.exe");
                             process.StartInfo.Arguments = $"\"{metaFile}\" \"{bdmvDir}\"";
                             process.StartInfo.UseShellExecute = false;
                             process.StartInfo.RedirectStandardOutput = true;
@@ -776,7 +788,7 @@ namespace VideoConverter
                     if (!Directory.Exists(bdmvDir))
                         Directory.CreateDirectory(bdmvDir);
                     var process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = "tsmuxer.exe";
+                    process.StartInfo.FileName = GetBundledExePath("tsmuxer.exe");
                     process.StartInfo.Arguments = $"\"{metaFile}\" \"{bdmvDir}\"";
                     process.StartInfo.UseShellExecute = false;
                     process.StartInfo.RedirectStandardOutput = true;
